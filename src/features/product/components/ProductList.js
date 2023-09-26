@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, incrementAsync, selectCount } from "./productListSlice";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { increment, incrementAsync, selectCount } from "../productSlice";
+import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@heroicons/react/20/solid";
 import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -12,6 +12,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -63,7 +64,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const products = [
+const oldproducts = [
   {
     id: 1,
     name: "Basic Tee",
@@ -94,6 +95,312 @@ const products = [
     price: "$35",
     color: "Black",
   },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "iPhone 9",
+    description: "An apple mobile which is nothing like apple",
+    price: 549,
+    discountPercentage: 12.96,
+    rating: 4.69,
+    stock: 94,
+    brand: "Apple",
+    category: "smartphones",
+    imageSrc: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/1/1.jpg",
+      "https://i.dummyjson.com/data/products/1/2.jpg",
+      "https://i.dummyjson.com/data/products/1/3.jpg",
+      "https://i.dummyjson.com/data/products/1/4.jpg",
+      "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 2,
+    name: "iPhone X",
+    description:
+      "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+    price: 899,
+    discountPercentage: 17.94,
+    rating: 4.44,
+    stock: 34,
+    brand: "Apple",
+    category: "smartphones",
+    imageSrc: "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/2/1.jpg",
+      "https://i.dummyjson.com/data/products/2/2.jpg",
+      "https://i.dummyjson.com/data/products/2/3.jpg",
+      "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 3,
+    name: "Samsung Universe 9",
+    description:
+      "Samsung's new variant which goes beyond Galaxy to the Universe",
+    price: 1249,
+    discountPercentage: 15.46,
+    rating: 4.09,
+    stock: 36,
+    brand: "Samsung",
+    category: "smartphones",
+    imageSrc: "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
+    images: ["https://i.dummyjson.com/data/products/3/1.jpg"],
+  },
+  {
+    id: 4,
+    name: "OPPOF19",
+    description: "OPPO F19 is officially announced on April 2021.",
+    price: 280,
+    discountPercentage: 17.91,
+    rating: 4.3,
+    stock: 123,
+    brand: "OPPO",
+    category: "smartphones",
+    imageSrc: "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/4/1.jpg",
+      "https://i.dummyjson.com/data/products/4/2.jpg",
+      "https://i.dummyjson.com/data/products/4/3.jpg",
+      "https://i.dummyjson.com/data/products/4/4.jpg",
+      "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 5,
+    name: "Huawei P30",
+    description:
+      "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
+    price: 499,
+    discountPercentage: 10.58,
+    rating: 4.09,
+    stock: 32,
+    brand: "Huawei",
+    category: "smartphones",
+    imageSrc: "https://i.dummyjson.com/data/products/5/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/5/1.jpg",
+      "https://i.dummyjson.com/data/products/5/2.jpg",
+      "https://i.dummyjson.com/data/products/5/3.jpg",
+    ],
+  },
+  {
+    id: 6,
+    name: "MacBook Pro",
+    description:
+      "MacBook Pro 2021 with mini-LED display may launch between September, November",
+    price: 1749,
+    discountPercentage: 11.02,
+    rating: 4.57,
+    stock: 83,
+    brand: "Apple",
+    category: "laptops",
+    imageSrc: "https://i.dummyjson.com/data/products/6/thumbnail.png",
+    images: [
+      "https://i.dummyjson.com/data/products/6/1.png",
+      "https://i.dummyjson.com/data/products/6/2.jpg",
+      "https://i.dummyjson.com/data/products/6/3.png",
+      "https://i.dummyjson.com/data/products/6/4.jpg",
+    ],
+  },
+  {
+    id: 7,
+    name: "Samsung Galaxy Book",
+    description:
+      "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched",
+    price: 1499,
+    discountPercentage: 4.15,
+    rating: 4.25,
+    stock: 50,
+    brand: "Samsung",
+    category: "laptops",
+    imageSrc: "https://i.dummyjson.com/data/products/7/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/7/1.jpg",
+      "https://i.dummyjson.com/data/products/7/2.jpg",
+      "https://i.dummyjson.com/data/products/7/3.jpg",
+      "https://i.dummyjson.com/data/products/7/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 8,
+    name: "Microsoft Surface Laptop 4",
+    description:
+      "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
+    price: 1499,
+    discountPercentage: 10.23,
+    rating: 4.43,
+    stock: 68,
+    brand: "Microsoft Surface",
+    category: "laptops",
+    imageSrc: "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/8/1.jpg",
+      "https://i.dummyjson.com/data/products/8/2.jpg",
+      "https://i.dummyjson.com/data/products/8/3.jpg",
+      "https://i.dummyjson.com/data/products/8/4.jpg",
+      "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 9,
+    name: "Infinix INBOOK",
+    description:
+      "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
+    price: 1099,
+    discountPercentage: 11.83,
+    rating: 4.54,
+    stock: 96,
+    brand: "Infinix",
+    category: "laptops",
+    imageSrc: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/9/1.jpg",
+      "https://i.dummyjson.com/data/products/9/2.png",
+      "https://i.dummyjson.com/data/products/9/3.png",
+      "https://i.dummyjson.com/data/products/9/4.jpg",
+      "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 10,
+    name: "HP Pavilion 15-DK1056WM",
+    description:
+      "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+    price: 1099,
+    discountPercentage: 6.18,
+    rating: 4.43,
+    stock: 89,
+    brand: "HP Pavilion",
+    category: "laptops",
+    imageSrc: "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+    images: [
+      "https://i.dummyjson.com/data/products/10/1.jpg",
+      "https://i.dummyjson.com/data/products/10/2.jpg",
+      "https://i.dummyjson.com/data/products/10/3.jpg",
+      "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+    ],
+  },
+  {
+    id: 11,
+    name: "perfume Oil",
+    description:
+      "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
+    price: 13,
+    discountPercentage: 8.4,
+    rating: 4.26,
+    stock: 65,
+    brand: "Impression of Acqua Di Gio",
+    category: "fragrances",
+    imageSrc: "https://i.dummyjson.com/data/products/11/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/11/1.jpg",
+      "https://i.dummyjson.com/data/products/11/2.jpg",
+      "https://i.dummyjson.com/data/products/11/3.jpg",
+      "https://i.dummyjson.com/data/products/11/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 12,
+    name: "Brown Perfume",
+    description: "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml",
+    price: 40,
+    discountPercentage: 15.66,
+    rating: 4,
+    stock: 52,
+    brand: "Royal_Mirage",
+    category: "fragrances",
+    imageSrc: "https://i.dummyjson.com/data/products/12/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/12/1.jpg",
+      "https://i.dummyjson.com/data/products/12/2.jpg",
+      "https://i.dummyjson.com/data/products/12/3.png",
+      "https://i.dummyjson.com/data/products/12/4.jpg",
+      "https://i.dummyjson.com/data/products/12/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 13,
+    name: "Fog Scent Xpressio Perfume",
+    description:
+      "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men",
+    price: 13,
+    discountPercentage: 8.14,
+    rating: 4.59,
+    stock: 61,
+    brand: "Fog Scent Xpressio",
+    category: "fragrances",
+    imageSrc: "https://i.dummyjson.com/data/products/13/thumbnail.webp",
+    images: [
+      "https://i.dummyjson.com/data/products/13/1.jpg",
+      "https://i.dummyjson.com/data/products/13/2.png",
+      "https://i.dummyjson.com/data/products/13/3.jpg",
+      "https://i.dummyjson.com/data/products/13/4.jpg",
+      "https://i.dummyjson.com/data/products/13/thumbnail.webp",
+    ],
+  },
+  {
+    id: 14,
+    name: "Non-Alcoholic Concentrated Perfume Oil",
+    description:
+      "Original Al Munakh® by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil",
+    price: 120,
+    discountPercentage: 15.6,
+    rating: 4.21,
+    stock: 114,
+    brand: "Al Munakh",
+    category: "fragrances",
+    imageSrc: "https://i.dummyjson.com/data/products/14/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/14/1.jpg",
+      "https://i.dummyjson.com/data/products/14/2.jpg",
+      "https://i.dummyjson.com/data/products/14/3.jpg",
+      "https://i.dummyjson.com/data/products/14/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 15,
+    name: "Eau De Perfume Spray",
+    description:
+      "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality",
+    price: 30,
+    discountPercentage: 10.99,
+    rating: 4.7,
+    stock: 105,
+    brand: "Lord - Al-Rehab",
+    category: "fragrances",
+    imageSrc: "https://i.dummyjson.com/data/products/15/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/15/1.jpg",
+      "https://i.dummyjson.com/data/products/15/2.jpg",
+      "https://i.dummyjson.com/data/products/15/3.jpg",
+      "https://i.dummyjson.com/data/products/15/4.jpg",
+      "https://i.dummyjson.com/data/products/15/thumbnail.jpg",
+    ],
+  },
+  {
+    id: 16,
+    name: "Hyaluronic Acid Serum",
+    description:
+      "L'OrÃ©al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid",
+    price: 19,
+    discountPercentage: 13.31,
+    rating: 4.83,
+    stock: 110,
+    brand: "L'Oreal Paris",
+    category: "skincare",
+    imageSrc: "https://i.dummyjson.com/data/products/16/thumbnail.jpg",
+    images: [
+      "https://i.dummyjson.com/data/products/16/1.png",
+      "https://i.dummyjson.com/data/products/16/2.webp",
+      "https://i.dummyjson.com/data/products/16/3.jpg",
+      "https://i.dummyjson.com/data/products/16/4.jpg",
+      "https://i.dummyjson.com/data/products/16/thumbnail.jpg",
+    ],
+  },  
 ];
 
 export default function ProductList() {
@@ -356,8 +663,9 @@ export default function ProductList() {
                   <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
                     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                       {products.map((product) => (
-                        <div key={product.id} className="group relative">
-                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                        <Link to="/product-detail">
+                        <div key={product.id} className="group relative border-solid border-2 rounded p-2 border-gray-200 ">
+                          <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                             <img
                               src={product.imageSrc}
                               alt={product.imageAlt}
@@ -376,14 +684,21 @@ export default function ProductList() {
                                 </a>
                               </h3>
                               <p className="mt-1 text-sm text-gray-500">
-                                {product.color}
+                                <StarIcon className="w-6 h-6 inline"></StarIcon>
+                                <span className="align-bottom ml-1">{product.rating}</span>
                               </p>
                             </div>
+                            <div>
                             <p className="text-sm font-medium text-gray-900">
-                              {product.price}
+                              ${Math.round(product.price*(1-product.discountPercentage/100))}
                             </p>
+                            <p className="text-sm font-medium line-through text-gray-400">
+                              ${product.price}
+                            </p>                            
+                            </div>
                           </div>
                         </div>
+                        </Link>
                       ))}
                     </div>
                   </div>
